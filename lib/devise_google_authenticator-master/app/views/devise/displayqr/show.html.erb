@@ -1,0 +1,38 @@
+<div class="container">
+<center><h2 >QrCode</h2>
+
+<%= google_authenticator_qrcode(resource) %>
+
+<%= form_for(resource, :as => resource_name, :url => [:refresh, resource_name, :displayqr], :html => {:method => :post}) do |f|%>
+	<%= f.submit  t('devise.registration.newtoken') , class: "btn btn-warning mt-1" %>
+<% end %>
+<br>
+<%= form_for(resource, :as => resource_name, :url => [resource_name, :displayqr], :html => { :method => :put }) do |f| %>
+
+	<% if resource.errors.any? %>
+	    <div id="error_explanation ">
+	      <ul >
+	        <% resource.errors.full_messages.each do |messages| %>
+	          <li class="text-danger text-center"><%= messages %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	
+	<h3>2 factor authentication</h3>
+	<p><%= f.label :gauth_enabled %>
+	<%= f.check_box :gauth_enabled, class: "ml-3" %> 
+	<% if current_admin.gauth_enabled == "0" || current_admin.gauth_enabled == "f" %>
+		<span class="text-danger ml-3">Currently Two factor is Disabled</span>
+	<% else %>
+		<span class="text-success ml-3">Currently Two factor is Enabled</span>
+	<% end %>
+	</p>
+	<%= f.hidden_field :tmpid, value: @tmpid %>
+	<p><%= f.label :gauth_token%><br />
+	<%= f.number_field :gauth_token, :autocomplete => :off, class: "form-control" %>
+
+	<p><%= f.submit   t('devise.registration.submit') , class: "btn btn-primary" %></p>
+<% end %>
+</center>
+</div>

@@ -1,15 +1,17 @@
 RailsAdmin.config do |config|
+require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
 
   ### Popular gems integration
 
   ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
-  # config.current_user_method(&:current_user)
+ config.authenticate_with do
+  warden.authenticate! scope: :admin
+   end
+   config.current_user_method(&:current_admin)
+
 
   ## == CancanCan ==
-  # config.authorize_with :cancancan
+  config.authorize_with :cancancan
 
   ## == Pundit ==
   # config.authorize_with :pundit
@@ -30,8 +32,9 @@ RailsAdmin.config do |config|
     export
     bulk_delete
     show
+    delete_action
     edit
-    delete
+    # delete
     show_in_app
 
     ## With an audit adapter, you can add:

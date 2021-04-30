@@ -8,6 +8,8 @@
         </form>
     <% else %>
         <form class="form-inline">
+            <%= link_to "2FA",  admin_displayqr_path %>
+            <%= link_to " logout", destroy_admin_session_path, method: :delete %>
             <a class="nav-item nav-link mr-sm-2" href="/admins/sign_in">Admin Login</a>
             <a class="nav-item nav-link mr-sm-2" href="/users/sign_in">User Login</a>
             <a class="nav-item nav-link mr-sm-2" href="/users/sign_up">Register</a>

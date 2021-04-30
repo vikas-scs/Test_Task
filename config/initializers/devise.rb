@@ -208,13 +208,13 @@ Devise.setup do |config|
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
-  # config.maximum_attempts = 20
+  config.maximum_attempts = 20
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
-  # config.unlock_in = 1.hour
+  config.unlock_in = 1.hour
 
   # Warn on the last attempt before the account is locked.
-  # config.last_attempt_warning = true
+  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   #
@@ -308,4 +308,27 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  # ==> Devise Google Authenticator Extension
+  # Configure extension for devise
+
+  # How long should the user have to enter their token. To change the default, uncomment and change the below:
+  config.ga_timeout = 3.minutes
+
+  # Change time drift settings for valid token values. To change the default, uncomment and change the below:
+  config.ga_timedrift = 3
+
+  # Change setting to how long to remember device before requiring another token. Change to nil to turn feature off.
+  # To change the default, uncomment and change the below:
+   config.ga_remembertime = 1.month
+
+  # Change setting to assign the application name used by code generator. Defaults to Rails.application.class.parent_name.
+  # To change the default, uncomment and change the below:
+   config.ga_appname = 'Test_task'
+
+  # Change setting to bypass the Display QR page immediately after a user sign's up
+  # To change the default, uncomment and change the below. Defaults to false:
+   # config.ga_bypass_signup = true
+
+
 end

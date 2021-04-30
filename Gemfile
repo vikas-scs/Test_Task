@@ -18,7 +18,10 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 gem 'rails_admin', '~> 2.0'
-gem 'devise'
+gem 'devise', '~> 4.7', '>= 4.7.3'
+# gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master 2"
+gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -44,6 +47,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'cancancan'
 end
 
 group :test do

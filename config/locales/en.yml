@@ -30,4 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  admin:
+    actions:
+      fa_action:
+        menu: '2FA'
+        title: "2FA"
+        breadcrumb: '2FA' 
