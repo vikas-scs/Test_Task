@@ -32,9 +32,9 @@ require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
     export
     bulk_delete
     show
-    delete_action
+    # delete_action
     edit
-    # delete
+    delete
     show_in_app
 
     ## With an audit adapter, you can add:
