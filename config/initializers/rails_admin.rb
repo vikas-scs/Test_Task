@@ -1,5 +1,6 @@
 RailsAdmin.config do |config|
 require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
+ require Rails.root.join('lib', 'rails_admin', 'fa_action.rb')
 
   ### Popular gems integration
 
@@ -30,11 +31,12 @@ require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
     index                         # mandatory
     new
     export
+    fa_action
     bulk_delete
     show
-    # delete_action
+    delete_action
     edit
-    delete
+    # delete
     show_in_app
 
     ## With an audit adapter, you can add:

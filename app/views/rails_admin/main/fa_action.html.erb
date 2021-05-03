@@ -1,0 +1,9 @@
+<%= form_with(model: @admin) do |form| %>
+  <div>
+    <%= form.label :google_token %><br>
+    <%= form.text_field :gauth_token %>
+</div>
+<div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

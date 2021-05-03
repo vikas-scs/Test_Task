@@ -37,7 +37,7 @@ class Devise::DisplayqrController < DeviseController
     if resource.gauth_tmp != params[resource_name]['tmpid'] || !validate_token
       set_flash_message :notice, :submit
       # render :show
-      redirect_to admin_displayqr_path 
+      redirect_to "http://localhost:3000/admin"
       return
     end
     # puts resource.set_gauth_enabled(params[resource_name]['gauth_enabled'])
@@ -64,7 +64,7 @@ class Devise::DisplayqrController < DeviseController
       # puts params.inspect
         # bypass_sign_in resource, scope: scope
 
-      respond_with resource
+      redirect_to "http://localhost:3000/admin"
     else
       render :show
     end
