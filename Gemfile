@@ -19,6 +19,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'rails_admin', '~> 2.0'
 gem 'devise', '~> 4.7', '>= 4.7.3'
+gem 'git', '~> 1.8', '>= 1.8.1'
 # gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master 2"
 gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master"
 

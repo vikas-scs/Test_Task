@@ -1,0 +1,10 @@
+<h1>New Project</h1>
+  <%= form_with(model: @projects) do |form| %>
+  <div>
+    <%= form.label :enter_URL %><br>
+    <%= form.text_field :github_url %>
+</div>
+<div class="actions">
+    <%= form.submit "clone" %>
+ </div>
+ <% end %>

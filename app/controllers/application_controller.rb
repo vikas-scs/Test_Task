@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     # check for the class of the object to determine what type it is
     case resource.class.to_s
     when "User"
-    	root_path
+    	new_project_path
       # new_user_session_path  
     when "Admin"
       puts "hello"

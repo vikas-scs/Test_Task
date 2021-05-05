@@ -15,6 +15,15 @@
     <% end %>
 </nav>
 <% if user_signed_in? %>
-    
-
-<% end %>
+<div class="hello">
+<%= render 'form', project: @project %>
+ <%= link_to 'Back', root_path %>
+</div>
+ <% end %>
+ <style>
+  .hello{
+    content: center;
+    padding-left: 40%;
+    background-color: lightyellow;
+  }
+</style>
