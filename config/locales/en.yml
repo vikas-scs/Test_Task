@@ -36,3 +36,10 @@ en:
         menu: '2FA'
         title: "2FA"
         breadcrumb: '2FA' 
+  admin:
+    actions:
+      update_action:
+        title: Bulk update category
+        breadcrumb: Bulk Update
+        menu: Bulk update category
+        bulk_link: Update category for selected %{model_label_plural

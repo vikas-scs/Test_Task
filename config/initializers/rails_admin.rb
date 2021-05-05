@@ -1,6 +1,7 @@
 RailsAdmin.config do |config|
 require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
  require Rails.root.join('lib', 'rails_admin', 'fa_action.rb')
+ require Rails.root.join('lib', 'rails_admin', 'update_action.rb')
 
   ### Popular gems integration
 
@@ -38,6 +39,9 @@ require Rails.root.join('lib', 'rails_admin', 'delete_action.rb')
     edit
     # delete
     show_in_app
+    update_action do
+      only ['User']
+    end
 
     ## With an audit adapter, you can add:
     # history_index

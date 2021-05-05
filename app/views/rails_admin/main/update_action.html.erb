@@ -1,0 +1,21 @@
+<style type="text/css">
+      th, td{
+        padding: 5px;
+      }
+    </style>
+
+    <form action="" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+      <input type="hidden" name="bulk_action" value="<%= request.params['bulk_action'] %>" />
+      <input type="hidden" name="bulk_step" value="update" />
+      <% request.params['bulk_ids'].each do |bulk_id| %>
+        <input type="hidden" name="bulk_ids[]" value="<%= bulk_id %>" />
+        <% end %>
+        <%= form_tag("http://localhost:3000/admin/user/update_action", :method => "get") do %>
+        Token:
+        <%= text_field_tag :'token' %><br>
+        Country:
+        <%= text_field_tag :'country' %><br>
+       <%= submit_tag "update" %>
+    <% end %>
+    </form>
