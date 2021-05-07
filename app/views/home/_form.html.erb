@@ -1,9 +1,13 @@
 <h1>Add URL</h1>
-  <%= form_with(model: @project) do |form| %>
+  <%= form_with(model: @project , url:"home/index") do |form| %>
   <div>
     <%= form.label :enter_URL %><br>
     <%= form.text_field :github_url %>
-</div>
+  </div>
+  <div>
+    <%= form.label :Project_name %><br>
+    <%= form.text_field :name %>
+  </div>
 <div class="actions">
     <%= form.submit "clone" %>
  </div>

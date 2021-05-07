@@ -1,4 +1,5 @@
 require "git"
+require 'find'
 class ProjectController < ApplicationController
 def index
     
@@ -7,52 +8,77 @@ def index
     @mvcs = Mvc.all
     puts params.inspect
     @project = Project.find(params[:id])
-    @mvc = Mvc.new
-    @arr = @project.github_url
-    @arr1 = Array.new
-    @arr1 = @arr.split('vikas-scs/')
-    puts @arr1[1]
-    @ary = Dir["#{Rails.root}/public/#{@arr1[1]}/app/controllers/**/*.rb"].map do |m|
-    m.chomp('.rb').camelize.split("::").last
-    end
-    @ary1 = @ary = Dir["#{Rails.root}/public/#{@arr1[1]}/app/models/**/*.rb"].map do |m|
-    m.chomp('.rb').camelize.split("::").last
-    end
-    @ary2 = @ary = Dir["#{Rails.root}/public/#{@arr1[1]}/app/views/**/*.erb"].map do |m|
-    m.chomp('.erb').camelize.split("::").last
-    end
-    @mvc.controllers_count = @ary.count
-    @mvc.models_count = @ary1.count
-    @mvc.views_count = @ary2.count
-    @mvc.models_list = @arr1
-    @mvc.controllers_list = @arr
-    @mvc.views_list = @arr2
-    @mvc.save
+    
   end
   def new
     @project = Project.new
+    @mvc = Mvc.new
+    @filedet = Filedet.new
   end
   def edit
     @project = Project.find(params[:id])
   end
   def create
     @project = Project.new(project_params)
-    puts params["github_url"].to_s
-    @arr = params["github_url"]
-    @arr1 = Array.new
-    @arr1 = @arr.split('vikas-scs/')
-    puts @arr1[1].to_s
+    @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
-     g = Git.clone(params["github_url"],@arr1[1].to_s , :path => './public/')
+     g = Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
      puts g
     respond_to do |format|
-      if @project.save
-        format.html { redirect_to  @project, notice: "project was successfully created." }
+      if @project.save       #saving each project
+        @mvc.project_id = @project.id
+        @arr = @project.name
+        @ary1 = Dir["#{Rails.root}/public/#{@arr}/app/controllers/**/*.rb"].map do |m|
+         m.chomp('.rb').camelize.split("::").last
+          end
+        @mvc.controllers_list = @ary1
+        @mvc.controllers_count = @ary1.count
+        puts @ary
+        @ary2 = Dir["#{Rails.root}/public/#{@arr}/app/models/**/*.rb"].map do |m|
+        m.chomp('.rb').camelize.split("::").last
+       end
+        @mvc.models_count = @ary2.count
+        @mvc.models_list = @ary2
+       @ary3 = Dir["#{Rails.root}/public/#{@arr}/app/views/**/*.erb"].map do |m|
+       m.chomp('.erb').camelize.split("::").last
+      end
+      @mvc.views_count = @ary3.count
+      @mvc.views_list = @ary3
+      if @mvc.save 
+        @len = Array.new                  #saving each project models and controllers and views
+        Find.find("#{Rails.root}/public/#{@project.name}/") do |file|
+         @len << file
+         end
+        @value = @len.length-1
+        for i in 1..@value
+          if File.file?(@len[i])
+            @filedet = Filedet.new(filedet_params)
+            @filedet.project_id = @project.id
+             @file_name = @len[i].split("#{@project.name}/")
+            @filedet.file_name = @file_name[1]
+             file=File.open(@len[i],"r:ISO-8859-1:UTF-8")
+            lines = File.readlines(@len[i])
+           line_count = lines.size 
+            @filedet.lines_count = line_count
+            text = lines.join 
+            total_characters = text.length 
+            word_count = text.split.length 
+           @filedet.letter_count = total_characters
+           @filedet.words_count = word_count
+            total_characters_nospaces = text.gsub(/\s+/, '').length
+            @filedet.spaces_count = total_characters_nospaces
+            @filedet.save 
+          else 
+           next
+           end
+        end   #saving each project file details                      
+        format.html { redirect_to  index_path, notice: "project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
+    end
     end
   end
   def update
@@ -73,6 +99,13 @@ def index
   end
   private
     def project_params
-      params.permit(:github_url)
+      params.permit(:github_url, :name)
     end
+    def mvc_params
+      params.permit(:models_count, :views_count, :controllers_count, :controllers_list, :models_list, :views_list, :project_id)
+    end
+     def filedet_params
+      params.permit(:file_name , :words_count, :spaces_count, :lines_count, :letter_count, :project_id)
+    end
+
 end

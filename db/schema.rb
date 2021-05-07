@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_113351) do
+ActiveRecord::Schema.define(version: 2021_05_07_062109) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 2021_05_06_113351) do
     t.integer "spaces_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "project_id", null: false
+    t.index ["project_id"], name: "index_filedets_on_project_id"
   end
 
   create_table "mvcs", force: :cascade do |t|
@@ -62,6 +64,8 @@ ActiveRecord::Schema.define(version: 2021_05_06_113351) do
     t.string "models_list"
     t.string "controllers_list"
     t.string "views_list"
+    t.integer "project_id", null: false
+    t.index ["project_id"], name: "index_mvcs_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -71,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_113351) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id", null: false
+    t.string "name"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -88,5 +93,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_113351) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "filedets", "projects"
+  add_foreign_key "mvcs", "projects"
   add_foreign_key "projects", "users"
 end

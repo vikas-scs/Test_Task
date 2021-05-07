@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 	root "home#index"
   devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  # get 'home/index', to: 'home#index', as: :projects
+  get 'home/index', to: 'home#index', as: :index
   get "project/new", to:"project#new", as: :new_project
   post 'project/:id', to: 'project#create'
   get 'project/:id', to: 'project#show', as: :project
