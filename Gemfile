@@ -17,6 +17,7 @@ gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
+gem "chartkick"
 gem 'rails_admin', '~> 2.0'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'git', '~> 1.8', '>= 1.8.1'

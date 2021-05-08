@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_062109) do
+ActiveRecord::Schema.define(version: 2021_05_08_094325) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -70,13 +70,20 @@ ActiveRecord::Schema.define(version: 2021_05_07_062109) do
 
   create_table "projects", force: :cascade do |t|
     t.string "github_url"
-    t.string "repository_version"
-    t.string "technology"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id", null: false
     t.string "name"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "technology_version", force: :cascade do |t|
+    t.string "technology_name"
+    t.float "version"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "project_id", null: false
+    t.index ["project_id"], name: "index_technology_version_on_project_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -96,4 +103,5 @@ ActiveRecord::Schema.define(version: 2021_05_07_062109) do
   add_foreign_key "filedets", "projects"
   add_foreign_key "mvcs", "projects"
   add_foreign_key "projects", "users"
+  add_foreign_key "technology_version", "projects"
 end

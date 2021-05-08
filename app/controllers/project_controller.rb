@@ -22,55 +22,60 @@ def index
     @project = Project.new(project_params)
     @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
-     g = Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
-     puts g
+    g = Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
+    puts g
     respond_to do |format|
-      if @project.save       #saving each project
-        @mvc.project_id = @project.id
-        @arr = @project.name
+    if @project.save       #saving each project
+      @mvc.project_id = @project.id
+      @arr = @project.name
         @ary1 = Dir["#{Rails.root}/public/#{@arr}/app/controllers/**/*.rb"].map do |m|
-         m.chomp('.rb').camelize.split("::").last
-          end
-        @mvc.controllers_list = @ary1
-        @mvc.controllers_count = @ary1.count
-        puts @ary
+        m.chomp('.rb').camelize.split("::").last
+        end
+      @mvc.controllers_list = @ary1
+      @mvc.controllers_count = @ary1.count
         @ary2 = Dir["#{Rails.root}/public/#{@arr}/app/models/**/*.rb"].map do |m|
         m.chomp('.rb').camelize.split("::").last
-       end
-        @mvc.models_count = @ary2.count
-        @mvc.models_list = @ary2
-       @ary3 = Dir["#{Rails.root}/public/#{@arr}/app/views/**/*.erb"].map do |m|
-       m.chomp('.erb').camelize.split("::").last
-      end
+        end
+      @mvc.models_count = @ary2.count
+      @mvc.models_list = @ary2
+        @ary3 = Dir["#{Rails.root}/public/#{@arr}/app/views/**/*.erb"].map do |m|
+        m.chomp('.erb').camelize.split("::").last
+        end
       @mvc.views_count = @ary3.count
       @mvc.views_list = @ary3
       if @mvc.save 
         @len = Array.new                  #saving each project models and controllers and views
-        Find.find("#{Rails.root}/public/#{@project.name}/") do |file|
-         @len << file
-         end
+        Find.find("#{Rails.root}/public/#{@project.name}/") do |path|
+          @len << path 
+        end
         @value = @len.length-1
         for i in 1..@value
           if File.file?(@len[i])
             @filedet = Filedet.new(filedet_params)
             @filedet.project_id = @project.id
-             @file_name = @len[i].split("#{@project.name}/")
+            @file_name = @len[i].split("#{@project.name}/")
             @filedet.file_name = @file_name[1]
-             file=File.open(@len[i],"r:ISO-8859-1:UTF-8")
+            file=File.open(@len[i],"r:ISO-8859-1:UTF-8")
+            s = File.read(@len[i], :encoding => 'iso-8859-1')
+            s.encoding
+            number_of_words = 0
+            file.each_line(){ |line| number_of_words = number_of_words + line.split.size }
             lines = File.readlines(@len[i])
-           line_count = lines.size 
+            line_count = lines.size 
             @filedet.lines_count = line_count
             text = lines.join 
             total_characters = text.length 
-            word_count = text.split.length 
-           @filedet.letter_count = total_characters
-           @filedet.words_count = word_count
-            total_characters_nospaces = text.gsub(/\s+/, '').length
-            @filedet.spaces_count = total_characters_nospaces
-            @filedet.save 
-          else 
-           next
-           end
+            # word_count = text.split.length 
+            @filedet.letter_count = total_characters
+            @filedet.words_count = number_of_words
+            @space = s.count(" ")
+            @filedet.spaces_count = @space
+            # total_characters_nospaces = text.gsub(/\s+/, '').length
+            # @filedet.spaces_count = total_characters_nospaces
+            @filedet.save
+          else
+            next
+          end
         end   #saving each project file details                      
         format.html { redirect_to  index_path, notice: "project was successfully created." }
         format.json { render :show, status: :created, location: @project }
