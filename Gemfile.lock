@@ -147,6 +147,10 @@ GEM
     nokogiri (1.11.3-arm64-darwin)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pdf-core (0.9.0)
+    prawn (2.4.0)
+      pdf-core (~> 0.9.0)
+      ttfunk (~> 1.7)
     public_suffix (4.0.6)
     puma (5.2.2)
       nio4r (~> 2.0)
@@ -234,9 +238,13 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    squid (1.4.1)
+      activesupport (>= 4.0)
+      prawn (~> 2.2)
     temple (0.8.2)
     thor (1.1.0)
     tilt (2.0.10)
+    ttfunk (1.7.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -261,6 +269,8 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked_pdf (2.1.0)
+      activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.4.2)
@@ -287,11 +297,13 @@ DEPENDENCIES
   selenium-webdriver
   spring
   sqlite3 (~> 1.4)
+  squid (~> 1.4, >= 1.4.1)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
+  wicked_pdf
 
 RUBY VERSION
    ruby 3.0.0p0

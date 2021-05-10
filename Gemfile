@@ -21,6 +21,9 @@ gem "chartkick"
 gem 'rails_admin', '~> 2.0'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'git', '~> 1.8', '>= 1.8.1'
+gem 'squid', '~> 1.4', '>= 1.4.1'
+gem 'wicked_pdf', '~> 1.1'
+gem 'wkhtmltopdf-binary'
 # gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master 2"
 gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master"
 

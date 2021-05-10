@@ -15,8 +15,11 @@
     <% end %>
 </nav>
 <% if user_signed_in? %>
-<div>
-    <%= pie_chart Mvc.group(:models_count, :views_count, :controllers_count).count %>
-</div>    
+<% data = [['controller',     @mvc.controllers_count],
+          ['view',      @mvc.views_count],
+          ['model',  @mvc.models_count]] %>
 
+<%= pie_chart data, library: { pieSliceText: 'value' } %>  
+<%= link_to 'TEST download', projects_path(format: :pdf) %>
 <% end %>
+

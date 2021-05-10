@@ -3,4 +3,5 @@ class Project < ApplicationRecord
 	has_one :mvc
 	has_many :fildets
 	has_many :technology_versions
+	validates :name, presence: true
 end

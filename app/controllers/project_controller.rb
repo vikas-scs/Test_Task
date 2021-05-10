@@ -1,15 +1,25 @@
 require "git"
 require 'find'
+require 'squid'
 class ProjectController < ApplicationController
 def index
+   @mvc = Mvc.all
     
   end
   def show
+    @mvc = Mvc.find(params[:id])
     @mvcs = Mvc.all
-    puts params.inspect
+    puts @mvc.controllers_count
     @project = Project.find(params[:id])
-    
-  end
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "project",
+        template: "projects/show.html.erb",
+        layout: 'pdf.html.erb'
+      end
+    end
+end
   def new
     @project = Project.new
     @mvc = Mvc.new
@@ -77,7 +87,7 @@ def index
             next
           end
         end   #saving each project file details                      
-        format.html { redirect_to  index_path, notice: "project was successfully created." }
+        format.html { redirect_to  @project, notice: "project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new, status: :unprocessable_entity }

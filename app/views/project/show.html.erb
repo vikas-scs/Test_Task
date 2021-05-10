@@ -15,9 +15,10 @@
     <% end %>
 </nav>
 <% if user_signed_in? %>
-  <% @mvcs.each do |mvc| %>
-  model count:<%= mvc.model_count %>
-  view count:<%= mvc.view_count %>
-  controller count:<%= mvc.controller_count %>
-  <% end %>
+  <% data = [['controller',     @mvc.controllers_count],
+          ['view',      @mvc.views_count],
+          ['model',  @mvc.models_count]] %> 
+<%= pie_chart data, download: {filename: "file", format: "pdf"} %>
+<p><center><%= link_to "download(PDF)" , project_path(@project , format: "pdf") %></center></p>
+
 <% end %>
