@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-	def index
-  	
+	def pdf
+  	@mvc = Mvc.find(1)
   end
    def after_sign_in_path_for(resource)
    	puts "login path"

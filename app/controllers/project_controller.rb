@@ -1,13 +1,30 @@
 require "git"
 require 'find'
 require 'squid'
+require 'uri'
 class ProjectController < ApplicationController
 def index
-   @mvc = Mvc.all
-    
+   
   end
   def show
     @mvc = Mvc.find(params[:id])
+   config = """{
+  type: 'pie',
+  data: {
+    labels: ['model', 'view', 'controller'],
+    datasets: [{
+      label: 'Data',
+      data: [ 2, 8, 2]
+    }]
+  }
+}"""
+puts "helloooooooo"
+encoded = URI.encode_www_form_component(config)
+
+# Output a URL to my image
+@hello = "https://quickchart.io/chart?c=#{encoded}" 
+puts @hello
+    
     @mvcs = Mvc.all
     puts @mvc.controllers_count
     @project = Project.find(params[:id])
@@ -15,7 +32,7 @@ def index
       format.html
       format.pdf do
         render pdf: "project",
-        template: "projects/show.html.erb",
+        template: "project/show.html.erb",
         layout: 'pdf.html.erb'
       end
     end
