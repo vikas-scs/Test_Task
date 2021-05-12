@@ -1,0 +1,7 @@
+<h1>Test</h1>
+
+<% data = [['controller',     @mvc.controllers_count],
+          ['view',      @mvc.views_count],
+          ['model',  @mvc.models_count]] %>
+
+<%= pie_chart data, library: { pieSliceText: 'value' } %>  

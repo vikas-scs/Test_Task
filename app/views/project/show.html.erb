@@ -1,5 +1,56 @@
-
 <% if user_signed_in? %>
+<header>
+  <center><b><h1 style="color: white; background-color: olive"><%= @project.name %></h1></b></center>
+  <h4 style="text-align: right; "><b><%= @yes %></b></h4>
+  <h2>
+ </header>
+ <table class= "myTable" style="width: 100%">
+  	<tr>
+      <th>Models</th>
+      <th>Views</th>
+      <th>Controllers</th>
+  </tr>
+  <tr>
+      <td><%= @mvc.models_count %></td>
+       <td><%= @mvc.views_count %></td>
+       <td><%= @mvc.controllers_count %></td>
+   </tr>
+   </table>    
   <%= image_tag @hello %> 
-
+  <table class= "myTable" style="width: 100%">
+  	<tr>
+  		<th><b>File name</b></th>
+  		<th><b>No.of Lines</b></th>
+  		<th><b>No.of Words</b></th>
+  		<th><b>No.of Spaces</b></th>
+  		<th><b>No.of Letters</b></th>
+  	</tr>
+  	<% @filedets.each do |file| %>
+  	<tr>
+  	    <td><%= file.file_name %></td>
+  	    <td><%= file.lines_count %></td>
+  	    <td><%= file.words_count %></td>
+  	    <td><%= file.spaces_count %></td>
+  	    <td><%= file.letter_count %></td>
+  	</tr>
+  	<% end %>
+  </table>
 <% end %>
+<style>
+.myTable { 
+  width: 100%;
+  text-align: left;
+  background-color: white;
+  border-collapse: collapse; 
+  }
+.myTable th { 
+  background-color: lightblue;
+  color: salmon; 
+  }
+.myTable td, 
+.myTable th { 
+  padding: 10px;
+  border: 1px solid black; 
+  }
+  tr:nth-child(even) {background-color: #F0ffff;}
+</style>

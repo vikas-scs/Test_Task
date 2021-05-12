@@ -1,3 +1,3 @@
-class Repository < ApplicationRecord
+class Technology_version < ApplicationRecord
 	belongs_to :project
 end

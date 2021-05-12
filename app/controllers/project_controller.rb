@@ -2,29 +2,34 @@ require "git"
 require 'find'
 require 'squid'
 require 'uri'
+require 'Date'
+require 'rugged'
+require 'linguist'
+
+
 class ProjectController < ApplicationController
 def index
    
   end
   def show
-    @mvc = Mvc.find(params[:id])
-   config = """{
-  type: 'pie',
-  data: {
-    labels: ['model', 'view', 'controller'],
-    datasets: [{
-      label: 'Data',
-      data: [ 2, 8, 2]
-    }]
-  }
-}"""
-puts "helloooooooo"
-encoded = URI.encode_www_form_component(config)
-
-# Output a URL to my image
-@hello = "https://quickchart.io/chart?c=#{encoded}" 
-puts @hello
-    
+      @project = Project.find(params[:id])
+     @mvc = Mvc.find(params[:id])
+     @filedets = @project.filedets
+     @yes = @project.created_at.strftime("#{@project.created_at.day}-%B-%Y")   #sending data to show.html.erb through @yes as date
+     #creating a pie chart imaage for displaying in pdf
+     config = """{
+       type: 'pie',
+       data: {
+       labels: ['model', 'view', 'controller'],
+       datasets: [{
+       label: 'Data',
+       data: [#{@mvc.models_count},#{@mvc.views_count},#{@mvc.controllers_count}]
+       }]
+     }
+    }"""
+    encoded = URI.encode_www_form_component(config.strip)
+    # Output a URL to my image
+    @hello = "https://quickchart.io/chart?c=#{encoded}" 
     @mvcs = Mvc.all
     puts @mvc.controllers_count
     @project = Project.find(params[:id])
@@ -32,12 +37,13 @@ puts @hello
       format.html
       format.pdf do
         render pdf: "project",
-        template: "project/show.html.erb",
+        template: "project/show.html.erb",            #rendering pdf file through url
         layout: 'pdf.html.erb'
       end
     end
 end
   def new
+    
     @project = Project.new
     @mvc = Mvc.new
     @filedet = Filedet.new
@@ -50,9 +56,19 @@ end
     @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
     g = Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
-    puts g
     respond_to do |format|
     if @project.save       #saving each project
+      #getting technogies used in the repository
+    repo = Rugged::Repository.new("./public/#{@project.name}")
+    project = Linguist::Repository.new(repo, repo.head.target_id)     #=> "Ruby"
+    arr = project.languages
+    @limit = arr.length - 1 
+      for i in 0..@limit
+        @technology = Technology_version.new(technology_version_params)
+        @technology.technology_name = arr.keys[i]
+        @technology.project_id = @project.id
+        @technology.save
+      end
       @mvc.project_id = @project.id
       @arr = @project.name
         @ary1 = Dir["#{Rails.root}/public/#{@arr}/app/controllers/**/*.rb"].map do |m|
@@ -138,6 +154,9 @@ end
     end
      def filedet_params
       params.permit(:file_name , :words_count, :spaces_count, :lines_count, :letter_count, :project_id)
+    end
+    def technology_version_params
+      params.permit(:technology_name, :project_id)
     end
 
 end
