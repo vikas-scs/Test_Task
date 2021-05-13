@@ -3,18 +3,20 @@ require 'find'
 require 'squid'
 require 'uri'
 require 'Date'
-require 'rugged'
+require 'Rugged'
 require 'linguist'
-
+require 'charlock_holmes'
 
 class ProjectController < ApplicationController
-def index
-   
-  end
-  def show
+ def index
+   puts current_user.id
+   @projects = current_user.projects
+ end
+ def show
       @project = Project.find(params[:id])
      @mvc = Mvc.find(params[:id])
-     @filedets = @project.filedets
+     @technologies = @project.repositories    #assigning project related repository
+     @filedets = @project.filedets             #assigning project related stats
      @yes = @project.created_at.strftime("#{@project.created_at.day}-%B-%Y")   #sending data to show.html.erb through @yes as date
      #creating a pie chart imaage for displaying in pdf
      config = """{
@@ -30,7 +32,6 @@ def index
     encoded = URI.encode_www_form_component(config.strip)
     # Output a URL to my image
     @hello = "https://quickchart.io/chart?c=#{encoded}" 
-    @mvcs = Mvc.all
     puts @mvc.controllers_count
     @project = Project.find(params[:id])
     respond_to do |format|
@@ -41,7 +42,7 @@ def index
         layout: 'pdf.html.erb'
       end
     end
-end
+  end
   def new
     
     @project = Project.new
@@ -55,7 +56,15 @@ end
     @project = Project.new(project_params)
     @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
-    g = Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
+    # cloning project in required directory
+    begin
+     Git.clone(params["github_url"],params["name"].to_s , :path => './public/')
+    rescue
+      puts "yesssss"
+      flash[:alert] = "invalid url or project name already in use"
+      redirect_to new_project_path
+      return
+    end
     respond_to do |format|
     if @project.save       #saving each project
       #getting technogies used in the repository
@@ -64,13 +73,13 @@ end
     arr = project.languages
     @limit = arr.length - 1 
       for i in 0..@limit
-        @technology = Technology_version.new(technology_version_params)
+        @technology = Repository.new(repository_params)           #saving technology names
         @technology.technology_name = arr.keys[i]
         @technology.project_id = @project.id
         @technology.save
       end
       @mvc.project_id = @project.id
-      @arr = @project.name
+      @arr = @project.name                                    #saving models,views and controller stats
         @ary1 = Dir["#{Rails.root}/public/#{@arr}/app/controllers/**/*.rb"].map do |m|
         m.chomp('.rb').camelize.split("::").last
         end
@@ -108,18 +117,15 @@ end
             @filedet.lines_count = line_count
             text = lines.join 
             total_characters = text.length 
-            # word_count = text.split.length 
             @filedet.letter_count = total_characters
             @filedet.words_count = number_of_words
             @space = s.count(" ")
             @filedet.spaces_count = @space
-            # total_characters_nospaces = text.gsub(/\s+/, '').length
-            # @filedet.spaces_count = total_characters_nospaces
-            @filedet.save
+            @filedet.save             #saving each project file details 
           else
             next
           end
-        end   #saving each project file details                      
+        end                        
         format.html { redirect_to  @project, notice: "project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
@@ -155,7 +161,7 @@ end
      def filedet_params
       params.permit(:file_name , :words_count, :spaces_count, :lines_count, :letter_count, :project_id)
     end
-    def technology_version_params
+    def repository_params
       params.permit(:technology_name, :project_id)
     end
 

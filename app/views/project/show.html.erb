@@ -34,7 +34,17 @@
   	    <td><%= file.letter_count %></td>
   	</tr>
   	<% end %>
-  </table>
+  </table><br>
+<table class= "myTable" style="width: 100%">
+ <tr>
+      <th><b>Technologies</b></th>
+ </tr>
+ <% @technologies.each do |file| %>
+ <tr>
+        <td><%= file.technology_name %></td>
+  </tr>
+  <% end %>
+</table>
 <% end %>
 <style>
 .myTable { 

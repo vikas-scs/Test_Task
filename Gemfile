@@ -24,6 +24,9 @@ gem 'git', '~> 1.8', '>= 1.8.1'
 gem 'squid', '~> 1.4', '>= 1.4.1'
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary'
+gem 'rugged'
+gem 'github-linguist'
+
 # gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master 2"
 gem 'devise_google_authenticator', '~> 0.3.16' , path: "./lib/devise_google_authenticator-master"
 

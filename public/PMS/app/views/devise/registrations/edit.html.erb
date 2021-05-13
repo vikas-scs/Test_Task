@@ -1,0 +1,87 @@
+<div class="hello">
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+  <div>
+  <div style="float: right;">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <div class="form-group">
+      <% if resource.image.present? %>
+          <% @arr1 =Array.new() %>
+          <% @arr1 = "http://192.168.1.148:3000/" %>
+          <% @arr2 =  resource.image.path %>
+          <% @arr3 = Array.new() %>
+          <% @arr3 = @arr2.split('public/') %>
+          <% @arr4 = Array.new() %>
+          <% @arr4 = @arr1 + @arr3[1] %>
+          <% img = @arr4 %>
+          <%= image_tag @arr4,  style: 'height:10vw;width:10vw;margin-bottom:20px;' %> 
+      <% end %>
+       <div>
+         <%= f.label :image %><br>
+          <%= f.file_field :image %>
+        </div> 
+        <div class="actions">
+           <%= f.submit "Update" %>
+         </div>
+    </div>
+  </div>
+  <% end %>
+  <div style="float: left;">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+   <div class="field">
+    Name:<%= f.text_field :name %>
+  </div><br>
+  <div class="field">
+    Mobile:<%= f.text_field :mobile %>
+  </div><br>
+  <div class="field">
+   Email: <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div><br>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+        New password:<%= f.password_field :password %>
+  </div><br>
+
+  <div class="field">
+      Con_password:<%= f.password_field :password_confirmation %>
+  </div><br>
+
+  <div class="field">
+   Current_password:<%= f.password_field :current_password %>
+  </div><br>
+    <div class="field">
+    Organization:<%= f.select :organization_id,Organization.all.pluck(:name, :id) %>
+  </div><br>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+</p>
+<%= link_to "2FA",  user_displayqr_path %><br>
+<%= link_to "Back", :back %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :get }) do |f| %>
+Sign in count:<%= signed_in_resource.sign_in_count %><br>
+Last signin at:<%= signed_in_resource.last_sign_in_at.localtime %><br>
+Current signIn at:<%= signed_in_resource.current_sign_in_at.localtime %><br>
+Current signIn IP:<%= signed_in_resource.current_sign_in_ip %><br>
+Last signIn IP:<%= signed_in_resource.last_sign_in_ip %><br>
+<% end %>
+</div>
+</div>
+</div>
+<style>
+  .hello{
+    content: center;
+    padding-left: 20%;
+    padding-left: 20%;
+    background-color: lightgreen;
+  }
+</style> 

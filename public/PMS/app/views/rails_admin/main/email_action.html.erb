@@ -1,0 +1,31 @@
+<table class="table">
+  <tr>
+    <th>name</th>
+    <th>cofirmed emails</th>
+    <th>organization</th>
+    <th>pro_count</th>
+    <th>task_count</th>
+    <th>attach_count</th>
+  </tr>
+  <tr>
+   <% @users.each do |user| %>
+   <% if user.confirmed_at? %>
+   <td>  <%= user.name %>  </td>
+    <td>  <%= user.email %>  </td>
+    <td><%= user.organization.name %></td>
+    <td><%= user.projects.all.count %></td>
+    <% @us = 0 %>
+       <% @at = 0 %>
+    <% user.projects.each do|pro| %>
+      <% @task = pro.tasks.all.count %>
+       <% @att = pro.attachments.all.count %>
+       <% @us = @us + @task %>
+       <% @at = @at + @att %>
+      <% end %>
+      <td><%= @us %></td>
+      <td><%= @at %></td>
+     
+     <% end %>
+ </tr> 
+ <% end %>
+</table>

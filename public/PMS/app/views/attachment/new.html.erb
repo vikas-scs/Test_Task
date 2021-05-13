@@ -1,0 +1,24 @@
+<div class="hello">
+  <h1>New Tasks</h1>
+  <%= form_with(model: @attachment, :html => { :multipart => true}) do |form| %>
+  <div>
+    <%= form.label :image %><br>
+    <%= form.file_field :image %>
+        <%= form.hidden_field :project_id, value: params[:id] %>
+    <% @attachment.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+      </div><br>
+    <% end %>
+    
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+</div>
+<style>
+  .hello{
+    content: center;
+    padding-left: 40%;
+    background-color: lightyellow;
+  }
+</style>

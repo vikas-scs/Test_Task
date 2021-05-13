@@ -1,1 +1,53 @@
-<%= image_tag @hello %> 
+<nav class="navbar navbar-light " style="background-color: #e3f2fd;">
+    <a class="navbar-brand">Test Task</a>
+    <% if user_signed_in? %>
+        <form class="form-inline nav-item nav-link mr-sm-2">
+        	<strong><%= current_user.email %></strong>&nbsp
+          &nbsp<%= link_to " Edit profile", edit_user_registration_path %>&nbsp
+          &nbsp<%= link_to " logout", destroy_user_session_path, method: :delete %>
+        </form>
+    <% else %>
+        <form class="form-inline">
+            <a class="nav-item nav-link mr-sm-2" href="/admins/sign_in">Admin Login</a>
+            <a class="nav-item nav-link mr-sm-2" href="/users/sign_in">User Login</a>
+            <a class="nav-item nav-link mr-sm-2" href="/users/sign_up">Register</a>
+        </form>
+    <% end %>
+</nav><br>
+<% if user_signed_in? %>
+<center>
+<table class= "myTable" style="width: 70%">
+    <tr>
+      <th>Project name</th>
+      <th>View stats</th>
+      <th>Export PDF</th>
+  </tr>
+  <% @projects.each do |project| %>
+  <tr>
+      <td><%= project.name %></td>
+       <td><%= link_to "view", project %></td>
+       <td><%= link_to "download", project %></td>
+   </tr>
+   <% end %>
+   </table>    
+</center><br>
+<center><a href="project/new"><button type="button" class="btn btn-primary">Clone Project</button></center>
+<% end %>
+<style>
+.myTable { 
+  width: 100%;
+  text-align: left;
+  background-color: white;
+  border-collapse: collapse; 
+  }
+.myTable th { 
+  background-color: lightblue;
+  color: salmon; 
+  }
+.myTable td, 
+.myTable th { 
+  padding: 10px;
+  border: 1px solid black; 
+  }
+  tr:nth-child(even) {background-color: #F0ffff;}
+</style>
