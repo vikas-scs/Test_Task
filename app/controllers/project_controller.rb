@@ -13,15 +13,16 @@ class ProjectController < ApplicationController
   end
  def index
    if user_signed_in?
-    puts current_user.id
-    @projects = current_user.projects
- end
+     puts current_user.id
+     @projects = current_user.projects
+     @mvc = Mvc.all
+   end
  end
  def show
       @project = Project.find(params[:id])
-     @mvc = Mvc.find(params[:id])
+     @mvc = @project.mvc
      @technologies = @project.repositories    #assigning project related repository
-     @filedets = @project.filedets             #assigning project related stats
+     @filedets = @project.filedets           #assigning project related stats
      @yes = @project.created_at.strftime("#{@project.created_at.day}-%B-%Y")   #sending data to show.html.erb through @yes as date
      #creating a pie chart imaage for displaying in pdf
      config = """{

@@ -34,8 +34,6 @@ module RailsAdmin
               puts @user.email
               puts params.inspect
               @user.update_column(:country, params["country"])
-              @user.save
-
               end 
               flash[:success] = 'updated'
               redirect_to index_path

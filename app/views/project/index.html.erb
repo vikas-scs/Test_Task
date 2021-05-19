@@ -16,17 +16,23 @@
 </nav><br>
 <% if user_signed_in? %>
 <center>
-<table class= "myTable" style="width: 70%">
+<table class= "myTable" style="width: 90%">
     <tr>
       <th>Project name</th>
       <th>View stats</th>
       <th>Export PDF</th>
+      <th>Models list</th>
+      <th>Views list</th>
+      <th>Controllers list</th>
   </tr>
   <% @projects.each do |project| %>
   <tr>
       <td><%= project.name %></td>
        <td><%= link_to "view", project %></td>
        <td><%= link_to "download", project_path(format: :pdf, id: project.id) %></td>
+       <td><%= project.mvc.models_count %></td>
+       <td><%= project.mvc.views_count %></td>
+       <td><%= project.mvc.controllers_count %></td>
    </tr>
    <% end %>
    </table>    
