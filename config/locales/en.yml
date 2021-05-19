@@ -46,4 +46,4 @@ en:
   devise:
     displayqr:
       admin:
-        submit: updated successfully
+        submit: invalid token
