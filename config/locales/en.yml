@@ -42,8 +42,13 @@ en:
         title: Bulk update category
         breadcrumb: Bulk Update
         menu: Bulk update category
-        bulk_link: Update category for selected %{model_label_plural
+        bulk_link: Update category for selected
   devise:
     displayqr:
       admin:
         submit: invalid token
+  admin:
+    actions:
+      delete_action: deleting files
+      breadcrumb: delete_action
+      menu: delete
