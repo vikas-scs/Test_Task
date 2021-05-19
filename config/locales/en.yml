@@ -40,7 +40,7 @@ en:
         title: Bulk update category
         breadcrumb: Bulk Update
         menu: Bulk update category
-        bulk_link: Updated
+        bulk_link: Update
       delete_action:
         title: delete_bulk
         breadcrumb: delete_action
