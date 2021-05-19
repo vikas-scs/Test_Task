@@ -3,6 +3,9 @@
   <div>
     <%= form.label :Project_name %><br>
     <%= form.text_field :name %>
+    <% @project.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+      <% end %>
   </div>
   <div>
     <%= form.label :enter_URL %><br>

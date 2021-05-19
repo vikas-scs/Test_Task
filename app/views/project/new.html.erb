@@ -17,7 +17,7 @@
 </nav>
 <% if user_signed_in? %>
 <div class="hello">
-<%= render 'form', project: @project %>
+<%= render 'form', projects: @project %>
  <%= link_to 'Back', root_path %>
 </div>
  <% end %>
