@@ -33,26 +33,22 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
-            puts params.inspect
             @admin = Admin.find(current_admin.id)
-          get_qr = current_admin.gauth_secret
-          valid_vals = []
-          valid_vals << ROTP::TOTP.new(get_qr).at(Time.now)
+            get_qr = current_admin.gauth_secret
+            valid_vals = []                
+            valid_vals << ROTP::TOTP.new(get_qr).at(Time.now)                       #generatings otps 
             valid_vals << ROTP::TOTP.new(get_qr).at(Time.now.ago(30 ))
             valid_vals << ROTP::TOTP.new(get_qr).at(Time.now.in(30 ))
-             valid_vals << ROTP::TOTP.new(get_qr).at(Time.now.ago(30 ))
+            valid_vals << ROTP::TOTP.new(get_qr).at(Time.now.ago(30 ))
             valid_vals << ROTP::TOTP.new(get_qr).at(Time.now.in(30 ))
-               
-                if request.get? # DELETE
-
+            if request.get? # DELETE                                #get the request for deleting
               respond_to do |format|
                 format.html { render @action.template_name }
                 format.js   { render @action.template_name, :layout => false }
                 end
               end
-             
                 if request.delete? # DESTROY
-                 if valid_vals.include?(params["gauth_token"].to_i)
+                 if valid_vals.include?(params["gauth_token"].to_i)                  # checking authentication token to delete 
                   puts "yessss"
                   redirect_path = nil
                   @auditing_adapter && @auditing_adapter.delete_object(@object, @abstract_model, _current_user)
@@ -68,7 +64,7 @@ module RailsAdmin
                   redirect_to index_path
                 end
             else
-            flash[:error] = "please enter valid token"
+            flash[:error] = "please enter valid token"                 #displaying error message if wrong token was entered
             end
           end
           end

@@ -14,32 +14,25 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
-            puts params.inspect
             @users = list_entries(@model_config)
-            if request.params['bulk_step'].blank? # Selecting a category
+            if request.params['bulk_step'].blank?            # Selecting a category
               if @users.blank?
-                flash[:error] = 'No users selected to update'
+                flash[:error] = 'No users selected to update'  #if no users are selected
                 redirect_to index_path
               else
                 render @action.template_name
               end
             else
-              puts "helo"
-                  puts params.inspect
-                array = []
+                array = []                                    #stroring bulk ids in array 
                 array = params["bulk_ids"]
                 array.each do |id|
-                  puts id
               @user = User.find(id)
-              puts @user.email
-              puts params.inspect
-              @user.update_column(:country, params["country"])
+              @user.update_column(:country, params["country"])         #updating require element in selected ids
               end 
               flash[:success] = 'updated'
               redirect_to index_path
-
             end
-                        end
+         end
           
         end
         register_instance_option :bulkable? do
