@@ -43,3 +43,7 @@ en:
         breadcrumb: Bulk Update
         menu: Bulk update category
         bulk_link: Update category for selected %{model_label_plural
+  devise:
+    displayqr:
+      admin:
+        submit: updated successfully
