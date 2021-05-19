@@ -35,20 +35,17 @@ en:
       fa_action:
         menu: '2FA'
         title: "2FA"
-        breadcrumb: '2FA' 
-  admin:
-    actions:
+        breadcrumb: '2FA'
       update_action:
         title: Bulk update category
         breadcrumb: Bulk Update
         menu: Bulk update category
-        bulk_link: Update category for selected
+        bulk_link: Updated
+      delete_action:
+        breadcrumb: delete_action
+        menu: delete
   devise:
     displayqr:
       admin:
         submit: invalid token
-  admin:
-    actions:
-      delete_action: deleting files
-      breadcrumb: delete_action
-      menu: delete
+

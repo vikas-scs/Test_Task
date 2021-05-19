@@ -1,5 +1,12 @@
 en:
+    
   admin:
+    actions:
+      update_action:
+        title: Bulk update category
+        breadcrumb: Bulk Update
+        menu: Bulk update category
+        bulk_link: Updated
     js:
       true: True
       false: False
@@ -132,6 +139,12 @@ en:
       bulk_delete: "The following objects will be deleted, which may delete or orphan some of their related dependencies:"
       new_model: "%{name} (new)"
     export:
+      actions:
+      update_action:
+        title: Bulk update category
+        breadcrumb: Bulk Update
+        menu: Bulk update category
+        bulk_link: Updated
       confirmation: "Export to %{name}"
       select: "Select fields to export"
       select_all_fields: "Select All Fields"
