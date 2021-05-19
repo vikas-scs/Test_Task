@@ -37,7 +37,7 @@ class Devise::DisplayqrController < DeviseController
     if resource.gauth_tmp != params[resource_name]['tmpid'] || !validate_token
       set_flash_message :notice, :submit
       # render :show
-      redirect_to "http://localhost:3000/admin"
+      redirect_to index_path
       return
     end
     # puts resource.set_gauth_enabled(params[resource_name]['gauth_enabled'])
