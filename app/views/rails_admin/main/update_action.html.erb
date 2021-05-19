@@ -11,7 +11,7 @@
       <% request.params['bulk_ids'].each do |bulk_id| %>
         <input type="hidden" name="bulk_ids[]" value="<%= bulk_id %>" />
         <% end %>
-        <%= form_tag("http://localhost:3000/admin/user/update_action", :method => "get") do %>
+        <%= form_tag(update_action_path, :method => "get") do %>
         Country:
         <%= text_field_tag :'country' %>
                <%= submit_tag "update" %>

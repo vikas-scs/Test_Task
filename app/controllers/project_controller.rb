@@ -94,20 +94,21 @@ class ProjectController < ApplicationController
     @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
     # cloning project in required directory
-    begin
-     Git.clone(params["github_url"],params["name"].to_s , :path => './public/')       #error handling 
-    rescue
-      if Project.where(github_url: params["github_url"])                        #checking whether name  and url if already exist 
+    if Project.exists?(github_url: params["github_url"])                        #checking whether name  and url if already exist 
         puts "helllllooooooo"
-         flash[:alert] = "project alredy cloned with #{@project.name}"
+         flash[:alert] = "project alredy cloned with in db"
           redirect_to new_project_path
           return
-      elsif Project.where(name: params["name"])
+    end
+      if Project.exists?(name: params["name"])
         puts "helllllooooooo"
         flash[:alert] = "name already exist"
           redirect_to new_project_path
           return
       end
+    begin
+     Git.clone(params["github_url"],params["name"].to_s , :path => './public/')       #error handling 
+    rescue
       if !params["name"].present? && !params["github_url"].present?              #field validations
         flash[:alert] = "fields can't be empty"
       elsif !params["name"].present?
