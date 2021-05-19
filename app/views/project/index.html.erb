@@ -26,7 +26,7 @@
   <tr>
       <td><%= project.name %></td>
        <td><%= link_to "view", project %></td>
-       <td><%= link_to "download", project %></td>
+       <td><%= link_to "download", project_path(format: :pdf, id: project.id) %></td>
    </tr>
    <% end %>
    </table>    

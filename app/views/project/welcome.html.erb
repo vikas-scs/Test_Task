@@ -14,17 +14,7 @@
             <a class="nav-item nav-link mr-sm-2" href="/users/sign_up">Register</a>
         </form>
     <% end %>
-</nav>
+</nav><br>
 <% if user_signed_in? %>
-<div class="hello">
-<%= render 'form', project: @project %>
- <%= link_to 'Back', root_path %>
-</div>
- <% end %>
- <style>
-  .hello{
-    content: center;
-    padding-left: 40%;
-    background-color: lightyellow;
-  }
-</style>
+<center><b><h1>welcome</h1></b></center>
+<% end %>

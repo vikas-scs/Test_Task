@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'home/index', to: 'home#index'
+  get 'project/welcome', to: 'project#welcome', as: :welcome
   get 'project/index', to: 'project#index', as: :index
   get "project/new", to:"project#new", as: :new_project
   post 'project/:id', to: 'project#create'

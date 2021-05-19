@@ -12,10 +12,8 @@
         <input type="hidden" name="bulk_ids[]" value="<%= bulk_id %>" />
         <% end %>
         <%= form_tag("http://localhost:3000/admin/user/update_action", :method => "get") do %>
-        Token:
-        <%= text_field_tag :'token' %><br>
         Country:
-        <%= text_field_tag :'country' %><br>
-       <%= submit_tag "update" %>
+        <%= text_field_tag :'country' %>
+               <%= submit_tag "update" %>
     <% end %>
     </form>

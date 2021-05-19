@@ -31,14 +31,8 @@ module RailsAdmin
         @user = User.find(id)
         puts @user.email
         puts params.inspect
-        # @user.token = params["token"]
-        @user.update_column(:token, params["token"])
         @user.update_column(:country, params["country"])
-        if @user.save
-          if params["token"] != ""
             flash[:success] = 'updated successful'
-          end
-        end
       end
       
       # redirect_to "http://localhost:3000/admin/user"

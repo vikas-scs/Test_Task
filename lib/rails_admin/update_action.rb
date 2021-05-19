@@ -33,16 +33,8 @@ module RailsAdmin
               @user = User.find(id)
               puts @user.email
               puts params.inspect
-              # @user.token = params["token"]
-              @user.update_column(:token, params["token"])
-              puts "its coming here"
               @user.update_column(:country, params["country"])
               @user.save
-                
-              # @user.country = params["country"]
-              # # @user.
-              # @user.update_at(country)
-
 
               end 
               flash[:success] = 'updated'

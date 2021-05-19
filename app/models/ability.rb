@@ -13,7 +13,7 @@ class Ability
         puts "i am in admin"
         can :update, :all
         can :read, :all
-        # can :bulk, :update_action
+        can :update_action, User
     end
     # Define abilities for the passed in user here. For example:
     #
