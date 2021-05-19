@@ -42,6 +42,7 @@ en:
         menu: Bulk update category
         bulk_link: Updated
       delete_action:
+        title: delete_bulk
         breadcrumb: delete_action
         menu: delete
   devise:
