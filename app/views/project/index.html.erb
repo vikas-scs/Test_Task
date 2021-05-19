@@ -28,9 +28,9 @@
   <% @projects.each do |project| %>
   <tr>
       <td><%= project.name %></td>
-       <td><%= project.mvc.models_count %></td>
-       <td><%= project.mvc.views_count %></td>
-       <td><%= project.mvc.controllers_count %></td>
+       <td><%= project.mvc.models_count rescue 0 %></td>
+       <td><%= project.mvc.views_count rescue 0 %></td>
+       <td><%= project.mvc.controllers_count rescue 0 %></td>
        <td><%= link_to "view", project %></td>
        <td><%= link_to "download", project_path(format: :pdf, id: project.id) %></td>
    </tr>

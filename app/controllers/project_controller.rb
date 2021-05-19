@@ -14,8 +14,7 @@ class ProjectController < ApplicationController
  def index
    if user_signed_in?
      puts current_user.id
-     @projects = current_user.projects
-     @mvc = Mvc.all
+     @projects = current_user.projects              #assigning current user projects
    end
  end
  def show
@@ -24,7 +23,7 @@ class ProjectController < ApplicationController
      @technologies = @project.repositories    #assigning project related repository
      @filedets = @project.filedets           #assigning project related stats
      @yes = @project.created_at.strftime("#{@project.created_at.day}-%B-%Y")   #sending data to show.html.erb through @yes as date
-     #creating a pie chart imaage for displaying in pdf
+                                    #creating a pie chart imaage for displaying in pdf
      config = """{
        type: 'pie',
        data: {
@@ -78,7 +77,7 @@ class ProjectController < ApplicationController
     @hello = "https://quickchart.io/chart?c=#{encoded}" 
     puts @mvc.controllers_count
     @project = Project.find(params[:id])
-    respond_to do |format|
+    respond_to do |format|                                    
       format.html
       format.pdf do
         render template: "project/edit.html.erb",            #rendering pdf file through url
@@ -95,13 +94,13 @@ class ProjectController < ApplicationController
     @mvc = Mvc.new(mvc_params)
     @project.user_id = current_user.id
     # cloning project in required directory
-    if Project.exists?(github_url: params["github_url"])                        #checking whether name  and url if already exist 
+    if Project.exists?(github_url: params["github_url"])                        #checking whether url if already exist 
         puts "helllllooooooo"
          flash[:alert] = "project alredy cloned with in db"
           redirect_to new_project_path
           return
     end
-      if Project.exists?(name: params["name"])
+      if Project.exists?(name: params["name"])                                #checking whether name is already exist
         puts "helllllooooooo"
         flash[:alert] = "name already exist"
           redirect_to new_project_path
@@ -137,7 +136,7 @@ class ProjectController < ApplicationController
         arr2 = Array.new                                
         if arr.keys[i] == "Ruby"  
           if (File.exist?("#{Rails.root}/public/#{@project.name}/Gemfile"))                                  #checking Ruby version
-            File.open("#{Rails.root}/public/#{@project.name}/Gemfile","r") do |f|
+            File.open("#{Rails.root}/public/#{@project.name}/Gemfile","r") do |f|                            #getting version from the Gemfile
               f.each_line do |line|
                 arr1 = line.split(' ')
                 arr1.each do |word|
