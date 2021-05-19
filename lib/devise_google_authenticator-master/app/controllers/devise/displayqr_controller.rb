@@ -37,7 +37,7 @@ class Devise::DisplayqrController < DeviseController
     if resource.gauth_tmp != params[resource_name]['tmpid'] || !validate_token
       set_flash_message :notice, :submit
       # render :show
-      redirect_to rails_admin_path
+      redirect_to admin_displayqr_path
       return
     end
     # puts resource.set_gauth_enabled(params[resource_name]['gauth_enabled'])
@@ -54,11 +54,11 @@ class Devise::DisplayqrController < DeviseController
     #    end
     #   p resource.backup_tmp
 
-      # if resource.gauth_enabled?
-      #   flash[:alert] = "Enabled"
-      # else
-      #   flash[:notice] = "Disabled"
-      # end
+      if resource.gauth_enabled?
+        flash[:alert] = "Enabled"
+        else
+        flash[:notice] = "Disabled"
+      end
       #set_flash_message :notice, (resource.gauth_enabled?) ? :enabled :disabled   
       # (resource.gauth_enabled?) ? flash[:alert] = "Enabled and backup code: #{resource.backup_tmp}" : flash[:alert] = "Disabled"
       # puts params.inspect
